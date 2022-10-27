@@ -1,7 +1,7 @@
 #include<stdio.h>
 int main() {
     char* string1 = "Curious and curiouser";
-    char string2[] = "Lmao";
+    char string2[20] = "Lmao";
 
     scanf("string2[] = %s\n", string2);
     printf( "string2[] = %s\n", string2);
