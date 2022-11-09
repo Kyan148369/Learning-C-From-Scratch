@@ -31,11 +31,21 @@ struct node* reverse(struct node *stdnode)                              // rever
 // slow pointer 1 node at a time fast node two nodes at a time
 //When we reach the last element in the list for the fast pointer (NULL)
 // element we return the position of the slow pointer which is half of the size of a list without knowing its size
-struct node* FindingHalofLinkedList(struct node *stdnode)
-    {
+struct node* FindingMidElement(struct node *stdnode)
+   { 
     struct node *slow = stdnode;
-    struct node *next = stdnode;
+    struct node *fast = stdnode;
+    while (stdnode!= NULL );
+    { 
+        while (fast != NULL && fast->link != NULL)
+        {fast = fast->link->link;
+        slow = slow-> link;
+        }
+        printf("%d", slow);
     }
+    return stdnode;
+    }
+    
     
 void ElementsInList(int n) {
     struct node *temp;                                                  // creating pointers in the linked list        
@@ -94,7 +104,8 @@ int main(){
     displayList();                                                //Displays the entire list
     stdnode = reverse(stdnode);
     printf("Reversed linked list is \n");
-    displayList();                                               
+    displayList();  
+    stdnode =  FindingMidElement(stdnode);                                     
 
     return 0;
     }
