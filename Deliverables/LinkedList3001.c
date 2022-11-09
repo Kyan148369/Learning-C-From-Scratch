@@ -6,26 +6,36 @@
         int val;                                                       //value stored at a node
         struct node *link;                                             //Pointer(points to the address) of the next node 
 };      
-typedef struct node* NodeAddress;                                                     //global node type to the head node
+typedef struct node* NodeAddress;                                      //global node type to the head node
 NodeAddress stdnode;
 
 
-struct node* reverse(struct node *stdnode) 
+struct node* reverse(struct node *stdnode)                              // reverse function over here 
     {
-    struct node *prev = NULL;
-    struct node *next = NULL;
-     while(stdnode != NULL)
-    {
-        next = stdnode->link;
-        stdnode->link = prev;
-        prev = stdnode;
-        stdnode = next;
+    struct node *prev = NULL;                                           // pointer to keep track of the previous node
+    struct node *next = NULL;                                           // pointer to keep track of next element 
+     while(stdnode != NULL)                                             // while head node is not null cause if it is we have effectively reversed 
+    {                                                                   // the list after going through the below loop
+        next = stdnode->link;                                           // We are assigning the next address value one thats linking stdnode to link
+        stdnode->link = prev;                                           // Now we are assigning the head link to the prev element value
+        prev = stdnode;                                                 // Now we take prev pointer and assign it to head value
+        stdnode = next;                                                 // Finally we move onto the next node address by assigning stdnode
     }
-    stdnode = prev;
-    return stdnode;
+    stdnode = prev;                                                     //post the loop its basically just assigning it back 
+    return stdnode;                                                     // returns the head of the linked list
 }
    
 
+//First we need to assign a slow and fast pointer
+//After that we keep them traversing 
+// slow pointer 1 node at a time fast node two nodes at a time
+//When we reach the last element in the list for the fast pointer (NULL)
+// element we return the position of the slow pointer which is half of the size of a list without knowing its size
+struct node* FindingHalofLinkedList(struct node *stdnode)
+    {
+    struct node *slow = stdnode;
+    struct node *next = stdnode;
+    }
     
 void ElementsInList(int n) {
     struct node *temp;                                                  // creating pointers in the linked list        
@@ -78,7 +88,7 @@ void displayList()                                                    //Creating
 int main(){ 
     int n;                                                          //initializing input
     printf("Enter no of elements of linked list"); 
-    scanf("%d", &n);                                             //entering number of elements in linked list
+    scanf("%d", &n);                                               //entering number of elements in linked list
     ElementsInList(n);                                             //Taking the function that takes all the elements we want in the list with their values
     printf("Data entered in the list is\n");
     displayList();                                                //Displays the entire list
