@@ -1,25 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct node
+ struct node
 {                                                                      // creating struct with vals and nodes, typedef helps with having 
                                                                        //to not redeclare struct each time 
         int val;                                                       //value stored at a node
         struct node *link;                                             //Pointer(points to the address) of the next node 
-}*stdnode;                                                             //global node type to the head node
+};      
+typedef struct node* NodeAddress;                                                     //global node type to the head node
+NodeAddress stdnode;
 
 
-
-void ReversingLinkedList(int n)
-{
-    struct node* reverse(struct node *head) 
+struct node* reverse(struct node *stdnode) 
+    {
     struct node *prev = NULL;
     struct node *next = NULL;
-    
-   
+     while(stdnode != NULL)
+    {
+        next = stdnode->link;
+        stdnode->link = prev;
+        prev = stdnode;
+        stdnode = next;
+    }
+    stdnode = prev;
+    return stdnode;
 }
+   
+
     
 void ElementsInList(int n) {
-    struct node *temp;                                                 // creating pointers in the linked list        
+    struct node *temp;                                                  // creating pointers in the linked list        
                                                      
     stdnode = (struct node* ) malloc (sizeof(struct node));            // Allocating memory of nodes based on number of nodes 
                 
@@ -31,7 +40,7 @@ void ElementsInList(int n) {
     else {
 
         printf("Enter first element of list");                         //entering the head element of the linked list
-        scanf("%d\n",&stdnode->val);                                   // putting the pointer to the value of the node 
+        scanf("%d",&stdnode->val);                                   // putting the pointer to the value of the node 
         temp = stdnode;                                                // copying the address of stdnode to temp pointer 
 
 
@@ -69,11 +78,14 @@ void displayList()                                                    //Creating
 int main(){ 
     int n;                                                          //initializing input
     printf("Enter no of elements of linked list"); 
-    scanf("%d\n", &n);                                             //entering number of elements in linked list
+    scanf("%d", &n);                                             //entering number of elements in linked list
     ElementsInList(n);                                             //Taking the function that takes all the elements we want in the list with their values
     printf("Data entered in the list is\n");
     displayList();                                                //Displays the entire list
-    ReversingLinkedList();
+    stdnode = reverse(stdnode);
+    printf("Reversed linked list is \n");
+    displayList();                                               
+
     return 0;
     }
   //  ----------------------------------------------------------------------  
