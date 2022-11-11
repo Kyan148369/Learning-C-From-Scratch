@@ -48,8 +48,8 @@ NodeAddress Printingfirsthalf(NodeAddress head)                      // Over her
     }
                                                                      //should be a mix of Reversing and linked list with extra checks perform reversals recursively?    
 NodeAddress kChunkReverse(NodeAddress head, int k) {                 // chunk reverse k number of given nodes at first 
-    printf ("How many k chunks of elements in the linked list do u want to reverse?");
-    scanf ("%d", &k);
+   
+
     NodeAddress current = head;
     NodeAddress prev = NULL;
     NodeAddress next = NULL;
@@ -64,8 +64,9 @@ NodeAddress kChunkReverse(NodeAddress head, int k) {                 // chunk re
 
     if (next != NULL) {
         head->link = reverse(head);
-        return prev;
     }
+        return prev;
+    
 }
     
 void ElementsInList(int n) {
@@ -117,7 +118,8 @@ void displayList()                                                  //Creating F
 
 
 int main(){ 
-    int n;                                                          //initializing input
+    int n;  
+    int k;                                                        //initializing input
     printf("Enter no of elements of linked list:"); 
     scanf("%d", &n);                                               //entering number of elements in linked list
     ElementsInList(n);                                             //Taking the function that takes all the elements we want in the list with their values
@@ -127,7 +129,10 @@ int main(){
     printf("Reversed linked list is \n");
     displayList();  
     Printingfirsthalf(head); 
-    kChunkReverse(NodeAddress head, int k);                                    
+    printf ("How many k chunks of elements in the linked list do u want to reverse?");
+    scanf ("%d", &k);
+    head = kChunkReverse(head, k);    
+    displayList();                                
 
     return 0;
     }
