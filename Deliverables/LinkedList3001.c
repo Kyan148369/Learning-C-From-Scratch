@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <assert.h>
  struct node
-{                                                                      // creating struct with vals and nodes, typedef helps with having 
-                                                                       //to not redeclare struct each time 
-        int val;                                                       //value stored at a node
-        struct node *link;                                             //Pointer(points to the address) of the next node 
+{                                                                     // creating struct with vals and nodes, typedef helps with having 
+                                                                      //to not redeclare struct each time 
+        int val;                                                      //value stored at a node
+        struct node *link;                                            //Pointer(points to the address) of the next node 
 };      
-typedef struct node* NodeAddress;                                      //Renaming reference(pointer) to struct node as node address
-NodeAddress head;                                                      //Nodeaddress accepts pointer to a node (Nodeaddress is a data type sorta like int* x)
+typedef struct node* NodeAddress;                                     //Renaming reference(pointer) to struct node as node address
+NodeAddress head;                                                     //Nodeaddress accepts pointer to a node (Nodeaddress is a data type sorta like int* x)
                                                                       // Head is a pointer to an address which must contain node 
 
 NodeAddress reverse(NodeAddress head)                                // reverse function over here using nodeaddress because we're returning data type
@@ -16,8 +16,8 @@ NodeAddress reverse(NodeAddress head)                                // reverse 
     {
     NodeAddress prev = NULL;                                         // pointer to keep track of the previous node
     NodeAddress next = NULL;                                         // pointer to keep track of next element 
-     while(head != NULL)                                              // while head node is not null cause if it is we have effectively reversed 
-    {                                                                 // the list after going through the below loop
+     while(head != NULL)                                             // while head node is not null cause if it is we have effectively reversed 
+    {                                                                // the list after going through the below loop
         next = head->link;                                           // We are assigning the next address value one thats linking head to link
         head->link = prev;                                           // Now we are assigning the head link to the prev element value
         prev = head;                                                 // Now we take prev pointer and assign it to head value
@@ -28,14 +28,14 @@ NodeAddress reverse(NodeAddress head)                                // reverse 
 }
    
 
-//First we need to assign a slow and fast pointer
-//After that we keep them traversing 
-// slow pointer 1 node at a time fast node two nodes at a time
-//When we reach the last element in the list for the fast pointer (NULL)
-// element we return the position of the slow pointer which is half of the size of a list without knowing its size
-NodeAddress Printingfirsthalf(NodeAddress head)                    // Over here we declare the data type of the argument here
+                                                                     //First we need to assign a slow and fast pointer
+                                                                     //After that we keep them traversing 
+                                                                     // slow pointer 1 node at a time fast node two nodes at a time
+                                                                     //When we reach the last element in the list for the fast pointer (NULL)
+                                                                     // element we return the position of the slow pointer which is half of the size of a list without knowing its size
+NodeAddress Printingfirsthalf(NodeAddress head)                      // Over here we declare the data type of the argument here
    { 
-    NodeAddress slow = head;                                        // Assigning and intiliazing a pointer separate from the data structure in head?
+    NodeAddress slow = head;                                         // Assigning and intiliazing a pointer separate from the data structure in head
     NodeAddress fast = head;  
     printf("The first half elements are: ");  
     while (fast != NULL && fast->link != NULL){
@@ -46,7 +46,27 @@ NodeAddress Printingfirsthalf(NodeAddress head)                    // Over here 
     printf("\n");
     return head;
     }
-    
+                                                                     //should be a mix of Reversing and linked list with extra checks perform reversals recursively?    
+NodeAddress kChunkReverse(NodeAddress head, int k) {                 // chunk reverse k number of given nodes at first 
+    printf ("How many k chunks of elements in the linked list do u want to reverse?");
+    scanf ("%d", &k);
+    NodeAddress current = head;
+    NodeAddress prev = NULL;
+    NodeAddress next = NULL;
+    int i = 0;                                                       //counter 
+    while (current!= NULL && i <k ) {
+        next = current->link;                                        // traversing one node forward and assigning next to point to it
+        current->link = prev;                                        // initialize the current node to NULL why cant we just do that to NULL tho
+        prev = current;                                              // current still at head node we assign prev to that
+        current = next;                                              // move the pointer forward to the position of the next node  
+        i++;                                                         // i= i+1 essentially
+    }
+
+    if (next != NULL) {
+        head->link = reverse(head);
+        return prev;
+    }
+}
     
 void ElementsInList(int n) {
     NodeAddress temp;                                                 // creating temp pointer to a node         
@@ -106,7 +126,8 @@ int main(){
     head = reverse(head);
     printf("Reversed linked list is \n");
     displayList();  
-    Printingfirsthalf(head);                                     
+    Printingfirsthalf(head); 
+    kChunkReverse(NodeAddress head, int k);                                    
 
     return 0;
     }
