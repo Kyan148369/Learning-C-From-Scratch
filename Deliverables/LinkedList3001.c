@@ -1,28 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+
  struct node
 {                                                                      // creating struct with vals and nodes, typedef helps with having 
                                                                        //to not redeclare struct each time 
         int val;                                                       //value stored at a node
         struct node *link;                                             //Pointer(points to the address) of the next node 
 };      
-typedef struct node* NodeAddress;                                      //global node type to the head node
-NodeAddress stdnode;
+typedef struct node* NodeAddress;                                      //Renaming reference(pointer) to struct node as node address
+NodeAddress head;                                                      //Nodeaddress accepts pointer to a node (Nodeaddress is a data type sorta like int* x)
+                                                                      // Head is a pointer to an address which must contain node 
 
-
-struct node* reverse(struct node *stdnode)                              // reverse function over here 
+NodeAddress reverse(NodeAddress head)                                // reverse function over here using nodeaddress because we're returning data type
+                                                                     // of a pointer which contains node and it takes head as an arg
     {
-    struct node *prev = NULL;                                           // pointer to keep track of the previous node
-    struct node *next = NULL;                                           // pointer to keep track of next element 
-     while(stdnode != NULL)                                             // while head node is not null cause if it is we have effectively reversed 
-    {                                                                   // the list after going through the below loop
-        next = stdnode->link;                                           // We are assigning the next address value one thats linking stdnode to link
-        stdnode->link = prev;                                           // Now we are assigning the head link to the prev element value
-        prev = stdnode;                                                 // Now we take prev pointer and assign it to head value
-        stdnode = next;                                                 // Finally we move onto the next node address by assigning stdnode
+    NodeAddress prev = NULL;                                         // pointer to keep track of the previous node
+    NodeAddress next = NULL;                                         // pointer to keep track of next element 
+     while(head != NULL)                                              // while head node is not null cause if it is we have effectively reversed 
+    {                                                                 // the list after going through the below loop
+        next = head->link;                                           // We are assigning the next address value one thats linking head to link
+        head->link = prev;                                           // Now we are assigning the head link to the prev element value
+        prev = head;                                                 // Now we take prev pointer and assign it to head value
+        head = next;                                                 // Finally we move onto the next node address by assigning head
     }
-    stdnode = prev;                                                     //post the loop its basically just assigning it back 
-    return stdnode;                                                     // returns the head of the linked list
+    head = prev;                                                     //post the loop its basically just assigning it back 
+    return head;                                                     //returns the head of the linked list
 }
    
 
@@ -31,65 +33,64 @@ struct node* reverse(struct node *stdnode)                              // rever
 // slow pointer 1 node at a time fast node two nodes at a time
 //When we reach the last element in the list for the fast pointer (NULL)
 // element we return the position of the slow pointer which is half of the size of a list without knowing its size
-struct node* FindingMidElement(struct node *stdnode)
+NodeAddress Printingfirsthalf(NodeAddress head)                    // Over here we declare the data type of the argument here
    { 
-    struct node *slow = stdnode;
-    struct node *fast = stdnode;
-    while (stdnode!= NULL );
-    { 
-        while (fast != NULL && fast->link != NULL)
-        {fast = fast->link->link;
+    NodeAddress slow = head;                                        // Assigning and intiliazing a pointer separate from the data structure in head?
+    NodeAddress fast = head;  
+    printf("The first half elements are: ");  
+    while (fast != NULL && fast->link != NULL){
+        printf("%d ", slow->val);
+        fast = fast->link->link;
         slow = slow-> link;
         }
-        printf("%d", slow);
-    }
-    return stdnode;
+    printf("\n");
+    return head;
     }
     
     
 void ElementsInList(int n) {
-    struct node *temp;                                                  // creating pointers in the linked list        
+    NodeAddress temp;                                                 // creating temp pointer to a node         
                                                      
-    stdnode = (struct node* ) malloc (sizeof(struct node));            // Allocating memory of nodes based on number of nodes 
+    head = (NodeAddress) malloc (sizeof(struct node));               // Allocating memory for 1 node
                 
     
-    if(stdnode == NULL)  
-     {                                                                 //check whether the standard node is NULL and if so no memory allocation
+    if(head == NULL)  
+     {                                                                //When theres no val and no link we will not allocate memory
          printf("Memory wont be allocated");
     }
     else {
 
-        printf("Enter first element of list");                         //entering the head element of the linked list
-        scanf("%d",&stdnode->val);                                   // putting the pointer to the value of the node 
-        temp = stdnode;                                                // copying the address of stdnode to temp pointer 
+        printf("Input data for node 1:");                            //entering the head element of the linked list
+        scanf("%d",&head->val);                                      // putting the pointer to the value of the node 
+        temp = head;                                                 // copying the address of head to temp pointer 
 
 
         for (int i=2;i<=n; i++) 
         {
                 temp->link = malloc(sizeof(struct node));             //allocating memory and creating the next node 
-                temp = temp->link;                                    // traversing to the next node and assigning the value of temp to it
-                printf(" Input data for node %d : ", i);              // input data for the ith element
-                scanf(" %d", &temp->val);                             //enter input in the address of val        
+                temp = temp->link;                                    // Over here we shifting temp pointer to the next node
+                printf("Input data for node %d : ", i);              // input data for the ith element
+                scanf("%d", &temp->val);                             //enter input in the address of val        
  
             }                
       }
     }                                                                
  
 
-void displayList()                                                    //Creating Function to get all the elemtns of the list
+void displayList()                                                  //Creating Function to get all the elements of the linked list
     {
-    struct node *temp;   
-    if(stdnode == NULL)                                              //if no elements in list print null 
+    NodeAddress temp;                                               // Temp pointer to traverse the nodes and prints the next address  
+    if(head == NULL)                                                //if no elements in list print null 
     {
         printf(" List is empty.");
     }
     else
     {
-        temp = stdnode;                                             // Pointer temp address as head node 
-        while(temp != NULL)
+        temp = head;                                                 // Pointer temp address to point to head node
+        while(temp != NULL)                                          // Go to the node and make sure its not empty then we go on to print below
         {
-            printf(" Data = %d\n", temp->val);                      // prints the data of current node
-            temp = temp->link;                                      // advances the position of current node
+            printf(" Data = %d\n", temp->val);                      // prints the val of current node which is pointed to by the pointer(which can see val and address)
+            temp = temp->link;                                      // advances the position of current node and checks the next node
         }
     }
 } 
@@ -97,15 +98,15 @@ void displayList()                                                    //Creating
 
 int main(){ 
     int n;                                                          //initializing input
-    printf("Enter no of elements of linked list"); 
+    printf("Enter no of elements of linked list:"); 
     scanf("%d", &n);                                               //entering number of elements in linked list
     ElementsInList(n);                                             //Taking the function that takes all the elements we want in the list with their values
     printf("Data entered in the list is\n");
     displayList();                                                //Displays the entire list
-    stdnode = reverse(stdnode);
+    head = reverse(head);
     printf("Reversed linked list is \n");
     displayList();  
-    stdnode =  FindingMidElement(stdnode);                                     
+    Printingfirsthalf(head);                                     
 
     return 0;
     }
