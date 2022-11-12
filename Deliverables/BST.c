@@ -13,7 +13,7 @@ nodeAddress binarysearch(nodeAddress root, int val) {
 int n 
 printf('Enter the element that you want to find in the list');
 for (int i = 0; i<n; i++) {                                        // would take i<logn but it would give an error when the tree is unbalanced and on 1 edge
-scanf(%d, &val);
+scanf(%d, &val); 
 if (val≠&root && val<root) {                                    // over here checking if val is not equal to root val and val
 
         root = root→ left                                       // traverse left cause smaller 
