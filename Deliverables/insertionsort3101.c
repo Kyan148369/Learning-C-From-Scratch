@@ -16,20 +16,22 @@ int swap(min, arr[]) {                         // swap func to swap the min elem
     min = temp;
 }
 
-int insertionsort(){
+void insertionsort(){
 int i, j, key;
 inputarray(int n);
-malloc arr = (array) malloc (sizeof(n));        // setting out space for the array in memory
-key = arr[0];
-for (int i =0; i<n-1; i++);
-    if (arr[i]<key);                        
-    swap (arr[i],key);
-    j = i-1;
-    for (i=k, i <n-1, i--);
+malloc arr = (array) malloc (sizeof(n));        // setting out space for the array i    n memory
+key = arr[i];                                   // setting key element to 0
+for (int i =0; i<n-1; i++){                     // loop to cover entire array
+j = i-1                                
 
-
-    return 0;
+   while (j>= 0 && arr[j] > key) {                           // if the arr position 
+       arr[j+1]= arr[j];                        //
+        j = j-1;
+   }
+        arr[j+1] = key;
+    }
 }
+
 //Iterate from arr[1] to arr[N] over the array. 
 // Compare the current element (key) to its predecessor. 
 // If the key element is smaller than its predecessor, compare it to the elements before. 
