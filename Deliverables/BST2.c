@@ -9,7 +9,9 @@ struct node {
 };
 typedef struct node* nodeAddress;                                // Basically shortcut for writing struct node all the time as node address
 
-nodeAddress createnode(int val) {                                // allocating a new node for each element in the binary search tree 
+
+
+nodeAddress createnode(int val) {                                // allocating a new node foran  element in the binary search tree 
 
 nodeAddress node  = (nodeAddress)malloc(sizeof(nodeAddress));    // allocating memory for node 
  node->val = val;                                                // initializing val of the node
@@ -22,15 +24,35 @@ void inorder (nodeAddress root ) {                               // func for sor
     if (root != NULL ) {                                          // check to make sure that root is not NULL 
     inorder (root -> left);                                      // sorts inorder on the left value recursively
     printf( "%d", root->val);                                    // next prints the val stored in root  
-    inorder node -> right;                                       // sorts inorder on the right value recursively
-    }                                  
-                                                                
-                                                                
-
+    inorder (root -> right);                                       // sorts inorder on the right value recursively
+    }                                                                                              
 }
+ 
+
+nodeAddress Insertion(int val, nodeAddress root) {              // Function to insert a new element in a given binary search tree
+if (root == NULL){                                              // If no new elements present in the tree
+    return createnode(val, root);                               // calls create func to create a node address roogt and val
+}
+if  (val < root-> val) {                                        // if the val we are trying to insert is lower than the root val then insert on the left
+    root -> left = insert(val, root-> left);                    // insert val at the node address 
+    }
+elif (val > root-> val) {                                        // if the val we are trying to insert is great than the root val then insert on the right
+    root -> right = insert(val, root-> right);                   // insert val at the node address   
+    }   
+     return root;                                                // reurn the pointer address after finish
+  
+}                                                         
 
 
 int main() {
+    int n
+    int inputarr[];
+    int i;
+
+    for (i =0; i<n; i++){
+        printf (" Enter value for array position" , i);
+        scanf (%d, &n);
+    }
     scanf("%d", )
     return 0;
 }
