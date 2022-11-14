@@ -50,12 +50,32 @@ while (present && present->left != NULL) {                        // making sure
     present = present -> left;                                    // present pointer is equal to the pointer of the node to the left of present
     
 }
-    printf("present is %d", present);
     return present;                                               // return the node position of present as this would be the last element of the tree
 }
-
-nodeAddress NodeDeletion(nodeAddress root, int val){            
-
+                                                                // 3 cases 1) 1 of 2 child nodes  2) 1 child node 3) parent node with 2 childs
+nodeAddress NodeDeletion(nodeAddress root, int val){            // function for node deletion        
+    if (root == NULL)                                           // in case if base node (root) is null
+    return root;                                                // return root itself
+    if (val< root->val)                                         // situation in which value to be deleted is lesser than the val present at root
+    root -> left = NodeDeletion(root->left,val);                // traverse to the left of the root and call it recursively if condition satisfies
+    else if (val > root-> val)                                  // situation in which value to be deleted is greater than the val present at root
+    root -> right = NodeDeletion(root-> right,val);             // traverse to the left of the root and call it recursively if condition satisfies
+    else {
+        if (root-> left == NULL) {                                 // Parent with 1 child case left node null
+            nodeAddress temp = root -> right ;                  // take a temp pointer
+             free (root);                                        // freeing memory of the root over here cause child gets deleted
+            return temp;                                        // return temp pointer 
+        }
+        else if (root -> right == NULL) {                          // parent with 1 child case right node null
+            nodeAddress temp = root -> left;                    // take temp pointer assign it to the node left of root
+            free (root);                                        // free the node space allocation cause it got deleted
+            return temp;    
+        }
+        nodeAddress temp = FindMinElement(root->right);           // parent with two childs assign temp of the both to the min val of the right node
+        root-> val = temp -> val;                               // assign root val to temp val
+        root -> right = NodeDeletion(root-> right, temp -> val); // delete the node on the right and plug the values
+    }
+    return root;                                                // updates the treee
 }
 
 int main() {
@@ -71,9 +91,16 @@ int main() {
     for (int i =0; i<n; i++){                          
      root = Insertion(root, arr[i]);       
      }                                                          // inserting elements in the array 
-	
-    inorder(root);                                              // prints out the values in order of the binary search tree 
-    FindMinElement(root);
+	printf("Traversal of given tree is \n");
+    inorder(root);
+    int del;                                                    // prints out the values in order of the binary search tree 
+    printf ( "enter element you wanna delete: \n");                 
+    scanf("%d", &del);
+    printf (" Delete number del %d \n", del);
+    root = NodeDeletion(root, del);
+    printf("modified inorder traversal of list is : \n");
+    inorder(root);
+    
     return 0;
 
 }
