@@ -42,8 +42,21 @@ nodeAddress Insertion(nodeAddress root, int val)                // Function to i
        
      return root;                                                // return the pointer address after finish
   
-}                                                         
+}         
 
+nodeAddress FindMinElement(nodeAddress root){                     // Function to find the min element of a node
+nodeAddress present = root;                                       // basically creating a pointer of the current location we are in the bst              
+while (present && present->left != NULL) {                        // making sure that the pointer itself is not null and the the next element isnt null either
+    present = present -> left;                                    // present pointer is equal to the pointer of the node to the left of present
+    
+}
+    printf("present is %d", present);
+    return present;                                               // return the node position of present as this would be the last element of the tree
+}
+
+nodeAddress NodeDeletion(nodeAddress root, int val){            
+
+}
 
 int main() {
     int n;                                                      // initialize n data type
@@ -60,7 +73,7 @@ int main() {
      }                                                          // inserting elements in the array 
 	
     inorder(root);                                              // prints out the values in order of the binary search tree 
-
+    FindMinElement(root);
     return 0;
 
 }
