@@ -1,93 +1,70 @@
 #include <stdio.h>
-#include<stdlib.h>
- 
- 
-void swap(int* x, int* y)
+#include <stdlib.h>
+void swap(int *swapper, int *swapped)
 {
- 
-    int temp = *x;
- 
-    *x = *y;
- 
-    *y = temp;
+
+    int temp = *swapper;
+
+    *swapper = *swapped;
+
+    *swapped = temp;
 }
- 
 
 void heapify(int arr[], int n, int i)
 {
-    // Find largest among root, left child and right child
- 
-    // Initialize largest as root
-    int largest = i;
- 
-    // left = 2*i + 1
-    int left = 2 * i + 1;
- 
-    // right = 2*i + 2
-    int right = 2 * i + 2;
- 
-    // If left child is larger than root
-    if (left < n && arr[left] > arr[largest])
- 
-        largest = left;
- 
-    // If right child is larger than largest
-    // so far
-    if (right < n && arr[right] > arr[largest])
- 
-        largest = right;
- 
-    // Swap and continue heapifying if root is not largest
-    // If largest is not root
-    if (largest != i) {
- 
-        swap(&arr[i], &arr[largest]);
- 
-        // Recursively heapify the affected
-        // sub-tree
-        heapify(arr, n, largest);
+    int max = i; // Initialize max as root
+    int leftChild = 2 * i + 1;
+    int rightChild = 2 * i + 2;
+
+    // If left child is greater than root
+    if (leftChild < n && arr[leftChild] > arr[max])
+        max = leftChild;
+
+    // If right child is greater than max
+    if (rightChild < n && arr[rightChild] > arr[max])
+        max = rightChild;
+
+    // If max is not root
+    if (max != i)
+    {
+        swap(&arr[i], &arr[max]);
+        // heapify the affected sub-tree recursively
+        heapify(arr, n, max);
     }
 }
- 
+
+// Main function to perform heap sort
 void heapSort(int arr[], int n)
 {
- 
-    // Build max heap
+    // Rearrange array (building heap)
     for (int i = n / 2 - 1; i >= 0; i--)
- 
         heapify(arr, n, i);
- 
-    // Heap sort
-    for (int i = n - 1; i >= 0; i--) {
- 
-        swap(&arr[0], &arr[i]);
- 
-        // Heapify root element to get highest element at
-        // root again
-        heapify(arr, i, 0);
+
+    // Extract elements from heap one by one
+    for (int i = n - 1; i >= 0; i--)
+    {
+        swap(&arr[0], &arr[i]); // Current root moved to the end
+
+        heapify(arr, i, 0); // calling max heapify on the heap reduced
     }
 }
- 
+
 void printArray(int arr[], int n)
 {
-     int n = sizeof(arr) / sizeof(arr[0]);
-
-    printf("Enter number of elements desired in array:");       // self explanatory
-
-    scanf ("%d", &n);                                           // takes n number of elements in array as input
-    for (int i =0; i<n; i++){                                   //takes user input for array from 1 till n
-        printf ("Enter value for array position %d: " , i);
-        scanf ("%d", &arr[i]);
-    }
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
 }
- 
+
+// Driver code
 int main()
 {
+    int arr[] = {11, 34, 9, 5, 16, 10};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array:\n");
     printArray(arr, n);
- 
     heapSort(arr, n);
-    printf("Sorted array is\n");
-   
+    printf("Sorted array:\n");
+    printArray(arr, n);
 }
- 
-// This code is contributed by _i_plus_plus_
