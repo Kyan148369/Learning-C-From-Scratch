@@ -11,8 +11,40 @@
 // 4)We now combine the lists in the following way lesser - pivot - greater. Now, we have obtained the correct, sorted rank of the pivot element! (everything in lesser list is lower than the pivot value and everything in the greater list is larger than the pivot value)
 // Now we can sort the lesser list and greater list individually using the same algorithm as above. i.e. repeat steps 1-4 for the lesser list and greater list simultaneously
 
+rand func 
 
-#quick sort 
+
+#quick sort
+// swap func?
+temp = arr[0]
+arr [0] = arr[rand] // where 0<=rand< n-1
+arr [rand] = arr [0] // swapped 
+pivot = arr [0] // pivot element 
+for (int i =0, i<n, i++) {
+    malloc ( size of (arr(i)/arr(0)))
+    if (pivot< arr[i]){
+        malloc (arr) ; // allocate memory for greater than list  
+        greater[i] = arr [i] ;//correct way to append?
+    }
+    else (pivot >arr[i]) {
+        malloc (arr); // allocate memory for greater list 
+        lesser[i] = arr [i];''
+    }
+    func 
+    for (i = 0; i < lessersize ; i++)
+    arrjoint = arr [i]; 
+
+    arrjoint = arr[lessersize];
+
+    for (j =lessrsize+1; j <n ; j++)
+    arrjoint = arr[j]
+
+
+   // recurse lesser and greater now?
+} 
+
+
+
 int main (
     return 0;
 )
