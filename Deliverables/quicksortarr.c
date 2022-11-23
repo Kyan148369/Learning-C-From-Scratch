@@ -2,30 +2,61 @@
 #include <stdio.h>
 #include <assert.h>
 
-void swap {}
+void swap(int *a, int *b) {}
 
-int partition {}
+quicksort int partition(pivot, start, stop, n)
+{
+    int *p;
+    int *q;
+    int t = rand();
+    int rand_actual = (t % n); // Number thats in between 0 and n-1
+    pivot = a[rand_actual];
+    start = a[0];    // all the numbers lesser than pivot
+    stop = a[n - 1]; // all the numbers greater than pivot
+    // Over here first assign pointers to i, j (start elements) actually i and j would just be counters in loops tbh start and stop would be diff
+    // Items on left which are greater on left should be flagged since we would want to switch them with lesser than pivot elements on the right
+    // Items on right which are lesser than right should be flagged for the same reason and once they both are found swap function is called
+    // to switch both of them
+    for (int i = 0, i < n, i++)
+    {
+        for (int j = n - 1, j > 0, j--)
+        {
+            if (a[j] < pivot && a[i] > pivot)
+            {
+                swap(p, q);
+            }
 
-void quicksort {}
+            if (a[i] > pivot)
+            {
+                p = a[i];
+            }
+            pivot = a[]
+        }
+    }
+    return (i + 1)
+    // printf("rand we will use is %d", rand_actual);
+}
 
-void PrintArr(*a, n)
+int quicksort() {}
+
+void PrintArr(a, n)
 {
     for (int i; i < n, i++)
     {
-        printf("Element number %d is %d", i; a[i]);
+        printf("Element number %d is %d", i, a[i]);
     }
 }
 
 int main()
 {
-    int n = 11;
-    int *a = (int *)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++)
-    {
-        printf("element number %d:", i + 1);
-        scanf("%d", &a[i]);
-    }
 
+    int a[] = [ 32, 2342, 424, 2, 482, 424, 42, 51, 24, 13, 4, 41, 31, 3441 ];
+    int n = sizeof(a) / size of(a[0]);
+    printf("Array to quicksort is");
+    PrintArr(a, n);
+    quicksort(a, 0, n - 1);
+    printf("sorted array is");
+    PrintArr(a, n);
     return 0;
 }
 
@@ -45,10 +76,7 @@ int main()
 //}
 // {
 // #quick sort
-// int t = rand();
-// printf("rand number is %d", t);
-// int rand_actual = (t % 11);
-// printf("rand we will use is %d", rand_actual);
+
 //     // swap func?
 //     temp = arr[0];
 //     arr[0] = arr[rand]     // where 0<=rand< n-1
