@@ -2,6 +2,33 @@
 #include <stdio.h>
 #include <assert.h>
 
+void swap {}
+
+int partition {}
+
+void quicksort {}
+
+void PrintArr(*a, n)
+{
+    for (int i; i < n, i++)
+    {
+        printf("Element number %d is %d", i; a[i]);
+    }
+}
+
+int main()
+{
+    int n = 11;
+    int *a = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++)
+    {
+        printf("element number %d:", i + 1);
+        scanf("%d", &a[i]);
+    }
+
+    return 0;
+}
+
 // essentially we are splitting it into two partitions/arrays each time and taking pivots at middle
 
 // 1)A divide and conquer algorithm that sorts an unsorted list using the following algorithm:
@@ -13,9 +40,15 @@
 
 // rand func
 
-//     swap(*a, n)
+//     swap(*a, start, end){
+
+//}
 // {
 // #quick sort
+// int t = rand();
+// printf("rand number is %d", t);
+// int rand_actual = (t % 11);
+// printf("rand we will use is %d", rand_actual);
 //     // swap func?
 //     temp = arr[0];
 //     arr[0] = arr[rand]     // where 0<=rand< n-1
@@ -45,20 +78,3 @@
 
 //         // recurse lesser and greater now?
 //     }
-
-int main()
-{
-    int n = 11;
-    int *a = (int *)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++)
-    {
-        printf("element number %d:", i + 1);
-        scanf("%d", &a[i]);
-    }
-
-    int t = rand();
-    printf("rand number is %d", t);
-    int rand_actual = (t % 11);
-    printf("rand we will use is %d", rand_actual);
-    return 0;
-}
