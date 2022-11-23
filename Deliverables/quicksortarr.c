@@ -6,15 +6,15 @@
 
 int partition(int a[], int start, int stop)
 {
-    int t = rand();
-    int rand_actual = (t % n); // Number thats in between 0 and n-1
-    int pivot = a[rand_actual];
-    int i = start; // all the numbers lesser than pivot
-                   // all the numbers greater than pivot
-                   // Over here first assign pointers to i, j (start elements) actually i and j would just be counters in loops tbh start and stop would be diff
-                   // Items on left which are greater on left should be flagged since we would want to switch them with lesser than pivot elements on the right
+    // int t = rand();
+    // int rand_actual = (t % n); // Number thats in between 0 and n-1
+    int pivot = a[stop];
+    int i = (start - 1); // all the numbers lesser than pivot
+                         // all the numbers greater than pivot
+                         // Over here first assign pointers to i, j (start elements) actually i and j would just be counters in loops tbh start and stop would be diff
+                         // Items on left which are greater on left should be flagged since we would want to switch them with lesser than pivot elements on the right
     // to switch both of them
-    for (int j = start; j <= stop; j--) // loop looking at from the end of the array
+    for (int j = start; j <= stop - 1; j++) // loop looking at from the end of the array
     {
         if (a[j] < pivot) // Items on right which are lesser than right should be flagged since we would want these values swapped to the left
         {
@@ -29,21 +29,21 @@ int partition(int a[], int start, int stop)
     a[stop] = swapper;
     return (i + 1);
 }
-void quicksort(int a[], int start, int stop, int n)
+void quicksort(int a[], int start, int stop)
 {
     if (start < stop)
     {
-        int p = partition(a, start, stop, n);
-        quicksort(a, start, p - 1, n);
-        quicksort(a, p + 1, stop, n);
+        int p = partition(a, start, stop);
+        quicksort(a, start, p - 1);
+        quicksort(a, p + 1, stop);
     }
 }
 
 void PrintArr(int a[], int n)
 {
-    for (int i; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        printf("Element number %d is %d", i, a[i]);
+        printf("%d ", a[i]);
     }
 }
 
@@ -54,8 +54,8 @@ int main()
     int n = sizeof(a) / sizeof(a[0]);
     printf("Array to quicksort is");
     PrintArr(a, n);
-    quicksort(a, 0, n - 1, n);
-    printf("sorted array is");
+    quicksort(a, 0, n - 1);
+    printf("\nsorted array is");
     PrintArr(a, n);
     return 0;
 }
