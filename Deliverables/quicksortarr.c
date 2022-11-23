@@ -2,46 +2,46 @@
 #include <stdio.h>
 #include <assert.h>
 
-void swap(int *a, int *b) {}
+// void swap(int *a, int *b) {}
 
-quicksort int partition(pivot, start, stop, n)
+int partition(int a[], int start, int stop)
 {
-    int *p;
-    int *q;
     int t = rand();
     int rand_actual = (t % n); // Number thats in between 0 and n-1
-    pivot = a[rand_actual];
-    start = a[0];    // all the numbers lesser than pivot
-    stop = a[n - 1]; // all the numbers greater than pivot
-    // Over here first assign pointers to i, j (start elements) actually i and j would just be counters in loops tbh start and stop would be diff
-    // Items on left which are greater on left should be flagged since we would want to switch them with lesser than pivot elements on the right
-    // Items on right which are lesser than right should be flagged for the same reason and once they both are found swap function is called
+    int pivot = a[rand_actual];
+    int i = start; // all the numbers lesser than pivot
+                   // all the numbers greater than pivot
+                   // Over here first assign pointers to i, j (start elements) actually i and j would just be counters in loops tbh start and stop would be diff
+                   // Items on left which are greater on left should be flagged since we would want to switch them with lesser than pivot elements on the right
     // to switch both of them
-    for (int i = 0, i < n, i++)
+    for (int j = start; j <= stop; j--) // loop looking at from the end of the array
     {
-        for (int j = n - 1, j > 0, j--)
+        if (a[j] < pivot) // Items on right which are lesser than right should be flagged since we would want these values swapped to the left
         {
-            if (a[j] < pivot && a[i] > pivot)
-            {
-                swap(p, q);
-            }
-
-            if (a[i] > pivot)
-            {
-                p = a[i];
-            }
-            pivot = a[]
+            i++;                // We increment i val
+            int swapper = a[i]; // take the value at a[i] and swap it with that value
+            a[i] = a[j];        // just switching it
+            a[j] = swapper;     // swapped the other variable in place;
         }
     }
-    return (i + 1)
-    // printf("rand we will use is %d", rand_actual);
+    int swapper = a[i + 1]; // incrementing a
+    a[i + 1] = a[stop];
+    a[stop] = swapper;
+    return (i + 1);
+}
+void quicksort(int a[], int start, int stop, int n)
+{
+    if (start < stop)
+    {
+        int p = partition(a, start, stop, n);
+        quicksort(a, start, p - 1, n);
+        quicksort(a, p + 1, stop, n);
+    }
 }
 
-int quicksort() {}
-
-void PrintArr(a, n)
+void PrintArr(int a[], int n)
 {
-    for (int i; i < n, i++)
+    for (int i; i < n; i++)
     {
         printf("Element number %d is %d", i, a[i]);
     }
@@ -50,11 +50,11 @@ void PrintArr(a, n)
 int main()
 {
 
-    int a[] = [ 32, 2342, 424, 2, 482, 424, 42, 51, 24, 13, 4, 41, 31, 3441 ];
-    int n = sizeof(a) / size of(a[0]);
+    int a[] = {32, 2342, 424, 2, 482, 424, 42, 51, 24, 13, 4, 41, 31, 3441};
+    int n = sizeof(a) / sizeof(a[0]);
     printf("Array to quicksort is");
     PrintArr(a, n);
-    quicksort(a, 0, n - 1);
+    quicksort(a, 0, n - 1, n);
     printf("sorted array is");
     PrintArr(a, n);
     return 0;
