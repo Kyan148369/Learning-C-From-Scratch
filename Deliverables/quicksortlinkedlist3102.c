@@ -58,9 +58,9 @@ void displayList() // Creating Function to get all the elements of the linked li
 NodeAddress lastnode(NodeAddress head)
 {
     NodeAddress temp = head;
-    while (temp != NULL & temp->link != NULL)
+    while ((temp != NULL) & (temp->link != NULL))
     {
-        temp = temp->link; // Keep traversing the list while neither temp is null or temp-> next address is null
+        temp = temp->link; // Keep traversing the list while neither temp is null or temp-> link address is null
     }
     return temp;
 }
@@ -88,10 +88,10 @@ NodeAddress partition(NodeAddress first, NodeAddress pivot)
             first->val = traverse_ahead->val; // switching the vals of the pointers
             traverse_ahead->val = temp;       // switching the traverse_ahead val to (start->val technically)
 
-            first = first->next; // this is us advancing forward essentially
+            first = first->link; // this is us advancing forward essentially
         }
 
-        traverse_ahead = traverse_ahead->next; // Traversing to the next node
+        traverse_ahead = traverse_ahead->link; // Traversing to the next node
     }
 
     temp = first->val; // Change pivot node value to the current node
@@ -100,18 +100,36 @@ NodeAddress partition(NodeAddress first, NodeAddress pivot)
     return prev;
 }
 
+void quick_sort(NodeAddress first, NodeAddress pivot)
+{
+    if (first == pivot)
+    {
+        return;
+    }
+    NodeAddress prev = partition(first, pivot);
+
+    if (prev != NULL && prev->link != NULL)
+    {
+        quick_sort(prev->link, pivot);
+    }
+
+    if (prev != NULL && first != prev)
+    {
+        quick_sort(first, pivot);
+    }
+}
+
 int main()
 {
+    NodeAddress head = NULL;
     int n; // initializing input
     printf("Enter no of elements of linked list:");
     scanf("%d", &n);   // entering number of elements in linked list
     ElementsInList(n); // Taking the function that takes all the elements we want in the list with their values
     printf("Data entered in the list is\n");
     displayList(); // Displays the entire list
-    head = reverse(head);
-    printf("Reversed linked list is \n");
-    displayList();
-    return 0;
+    quick_sort(head, lastnode(head));
+    printf("\n After Sort ");
 
     return 0;
 }
