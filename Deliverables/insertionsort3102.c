@@ -68,9 +68,8 @@ void sortedInsert(NodeAddress newnode)
     }
     else
     {
-        NodeAddress current = sorted;
-        /* Locate the node before the point of insertion
-         */
+        NodeAddress current = sorted; // Locate the node before the point of insertion
+
         while (current->link != NULL && current->link->val < newnode->val)
         {
             current = current->link;
@@ -83,24 +82,20 @@ void sortedInsert(NodeAddress newnode)
 void insertionsort()
 {
 
-    NodeAddress current = head;
+    NodeAddress current = head; // Traverse the given linked list and insert every
+                                // node to sorted
 
-    // Traverse the given linked list and insert every
-    // node to sorted
     while (current != NULL)
     {
 
-        // Store next for next iteration
-        NodeAddress next = current->link;
+        NodeAddress next = current->link; // Store next for next iteration
 
-        // insert current in sorted linked list
-        sortedInsert(current);
+        sortedInsert(current); // insert current in sorted linked list
 
-        // Update current
-        current = next;
+        current = next; // Update current as next
     }
-    // Update head to point to sorted linked list
-    head = sorted;
+
+    head = sorted; // Update head to point to sorted linked list
 }
 
 int main()
