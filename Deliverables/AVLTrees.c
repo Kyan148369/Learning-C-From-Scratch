@@ -7,39 +7,46 @@
 // we go for rotations to balance
 // if its +ve the height its imbalanced on the left if its negative its on the right
 
-struct TreeNode
+struct Node
 {
     int val;
-    struct TreeNode *left;
-    struct TreeNode *right;
+    struct Node *left;
+    struct Node *right;
     int height;
-} typedef struct TreeNode *NodeAddress;
+};
+typedef struct Node *NodeAddress;
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
-nodeAddress createnode(int val)
+NodeAddress createnode(int val)
 { // allocating a new node for an  element in the binary search tree
 
-    nodeAddress temp = (nodeAddress)malloc(sizeof(nodeAddress)); // allocating memory for node
+    NodeAddress temp = (NodeAddress)malloc(sizeof(NodeAddress)); // allocating memory for node
     temp->val = val;                                             // initializing val of the node
     temp->left = NULL;                                           // intializing pointer of the left pointer to NULL
     temp->right = NULL;                                          // intializing pointer of the right pointer to NULL
-
-    return temp; // return val of node
+    temp->height = 1;                                            // leaf node is where it gets attached
+    return temp;                                                 // return temp of type NodeAddress
 }
-void inorder(nodeAddress root)
+int height(NodeAddress Node)
+{
+    if (Node == NULL)
+        return 0;
+    return Node->height;
+}
+void inorder(NodeAddress root)
 { // func for sorting it in order recursively
     if (root != NULL)
     {                               // check to make sure that root is not NULL
-        inorder(root->left);        // sorts inorder on the left value recursively
         printf("%d \n", root->val); // next prints the val stored in root
+        inorder(root->left);        // sorts inorder on the left value recursively
         inorder(root->right);       // sorts inorder on the right value recursively
     }
 }
 
-nodeAddress Insertion(nodeAddress root, int val) // Function to insert a new element in a given binary search tree
+NodeAddress Insertion(NodeAddress root, int val) // Function to insert a new element in a given binary search tree
 {
     if (root == NULL)           // If no new elements present in the tree
         return createnode(val); // calls create func to create a node with val
@@ -51,11 +58,20 @@ nodeAddress Insertion(nodeAddress root, int val) // Function to insert a new ele
         root->right = Insertion(root->right, val); // insert val at the node address
 
     return root; // return the pointer address after finish
+
+    if (height(root->left) > height(root->right)) // calculating height of node is 1+ leaf node height
+    {
+        height = (1 + height(root->left));
+    }
+    else
+    {
+        height = (1 + height(root->right));
+    }
 }
 
-nodeAddress FindMinElement(nodeAddress root)
+NodeAddress FindMinElement(NodeAddress root)
 {                               // Function to find the min element of a node
-    nodeAddress present = root; // basically creating a pointer of the current location we are in the bst
+    NodeAddress present = root; // basically creating a pointer of the current location we are in the bst
     while (present && present->left != NULL)
     {                            // making sure that the pointer itself is not null and the the next element isnt null either
         present = present->left; // present pointer is equal to the pointer of the node to the left of present
@@ -63,7 +79,7 @@ nodeAddress FindMinElement(nodeAddress root)
     return present; // return the node position of present as this would be the last element of the tree
 }
 // 3 cases 1) 1 of 2 child nodes  2) 1 child node 3) parent node with 2 childs
-nodeAddress NodeDeletion(nodeAddress root, int val)
+NodeAddress NodeDeletion(NodeAddress root, int val)
 {                                                     // function for node deletion
     if (root == NULL)                                 // in case if base node (root) is null
         return root;                                  // return root itself
@@ -75,17 +91,17 @@ nodeAddress NodeDeletion(nodeAddress root, int val)
     {
         if (root->left == NULL)             // if left node of root is null
         {                                   // Parent with 1 child case left node null
-            nodeAddress temp = root->right; // take a temp pointer
+            NodeAddress temp = root->right; // take a temp pointer
             free(root);                     // freeing memory of the root over here cause child gets deleted
             return temp;                    // return temp pointer
         }
         else if (root->right == NULL)      // if right node of root is null
         {                                  // parent with 1 child case right node null
-            nodeAddress temp = root->left; // take temp pointer assign it to the node left of root
+            NodeAddress temp = root->left; // take temp pointer assign it to the node left of root
             free(root);                    // free the node space allocation cause it got deleted
             return temp;
         }
-        nodeAddress temp = FindMinElement(root->right);     // parent with two childs assign temp of the both to the min val of the right node
+        NodeAddress temp = FindMinElement(root->right);     // parent with two childs assign temp of the both to the min val of the right node
         root->val = temp->val;                              // assign root val to temp val
         root->right = NodeDeletion(root->right, temp->val); // delete the node on the right and plug the values
     }
@@ -103,7 +119,7 @@ int main()
         printf("Enter value for array position %d: ", i);
         scanf("%d", &arr[i]);
     }
-    nodeAddress root = NULL; // initializing root address to null to empty garbage values
+    NodeAddress root = NULL; // initializing root address to null to empty garbage values
     for (int i = 0; i < n; i++)
     {
         root = Insertion(root, arr[i]);
