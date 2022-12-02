@@ -21,13 +21,13 @@ typedef struct Node *NodeAddress;
 #include <assert.h>
 
 NodeAddress createnode(int val)
-{ // allocating a new node for an  element in the binary search tree
+{ // allocating a new node for an  element in the AVL tree
 
     NodeAddress temp = (NodeAddress)malloc(sizeof(NodeAddress)); // allocating memory for node
     temp->val = val;                                             // initializing val of the node
     temp->left = NULL;                                           // intializing pointer of the left pointer to NULL
     temp->right = NULL;                                          // intializing pointer of the right pointer to NULL
-    temp->height = 1;                                            // leaf node is where it gets attached
+    temp->height = 1;                                            // defining height variable for a node
     return temp;                                                 // return temp of type NodeAddress
 }
 int height(NodeAddress Node)
@@ -79,6 +79,63 @@ NodeAddress FindMinElement(NodeAddress root)
     return present; // return the node position of present as this would be the last element of the tree
 }
 // 3 cases 1) 1 of 2 child nodes  2) 1 child node 3) parent node with 2 childs
+
+// Get Balance factor of node N
+int getBalance(NodeAddressN)
+{
+    if (N == NULL)
+        return 0;
+    return height(N->left) - height(N->right);
+}
+
+int max(int a, int b)
+{
+    if (a > b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+NodeAddress rightrotate(NodeAddress r)
+{
+    NodeAddress l = r->left;
+    NodeAddress T2 = l->right;
+
+    l->right = r; // Performing necessary rotation
+    r->left = T2;
+
+    r->height = max(height(r->left), // Update r heights
+                    height(r->right)) +
+                1;
+    l->height = max(height(l->left), // Update l height
+                    height(l->right)) +
+                1;
+
+    return l; // Return new root
+}
+
+NodeAddress leftrotate(NodeAddress l)
+{
+
+    NodeAddress r = l->right;
+    NodeAddress T2 = r->left;
+
+    r->left = l; // Performing necessary rotation
+    l->right = T2;
+
+    l->height = max(height(l->left),
+                    height(l->right)) +
+                1;
+    r->height = max(height(r->left),
+                    height(r->right)) +
+                1;
+
+    return r; // Return new root
+}
 NodeAddress NodeDeletion(NodeAddress root, int val)
 {                                                     // function for node deletion
     if (root == NULL)                                 // in case if base node (root) is null
