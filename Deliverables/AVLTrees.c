@@ -30,62 +30,11 @@ NodeAddress createnode(int val)
     temp->height = 1;                                            // defining height variable for a node
     return temp;                                                 // return temp of type NodeAddress
 }
-int height(NodeAddress Node)
-{
-    if (Node == NULL)
-        return 0;
-    return Node->height;
-}
-void inorder(NodeAddress root)
-{ // func for sorting it in order recursively
-    if (root != NULL)
-    {                               // check to make sure that root is not NULL
-        printf("%d \n", root->val); // next prints the val stored in root
-        inorder(root->left);        // sorts inorder on the left value recursively
-        inorder(root->right);       // sorts inorder on the right value recursively
-    }
-}
-
-NodeAddress Insertion(NodeAddress root, int val) // Function to insert a new element in a given binary search tree
-{
-    if (root == NULL)           // If no new elements present in the tree
-        return createnode(val); // calls create func to create a node with val
-
-    if (val < root->val)                         // if the val we are trying to insert is lower than the root val then insert on the left
-        root->left = Insertion(root->left, val); // insert val at the node address
-
-    else if (val > root->val)                      // if the val we are trying to insert is great than the root val then insert on the right
-        root->right = Insertion(root->right, val); // insert val at the node address
-
-    return root; // return the pointer address after finish
-
-    if (height(root->left) > height(root->right)) // calculating height of node is 1+ leaf node height
-    {
-        height = (1 + height(root->left));
-    }
-    else
-    {
-        height = (1 + height(root->right));
-    }
-}
-
-NodeAddress FindMinElement(NodeAddress root)
-{                               // Function to find the min element of a node
-    NodeAddress present = root; // basically creating a pointer of the current location we are in the bst
-    while (present && present->left != NULL)
-    {                            // making sure that the pointer itself is not null and the the next element isnt null either
-        present = present->left; // present pointer is equal to the pointer of the node to the left of present
-    }
-    return present; // return the node position of present as this would be the last element of the tree
-}
-// 3 cases 1) 1 of 2 child nodes  2) 1 child node 3) parent node with 2 childs
-
-// Get Balance factor of node N
-int getBalance(NodeAddressN)
+int height(NodeAddress N)
 {
     if (N == NULL)
         return 0;
-    return height(N->left) - height(N->right);
+    return N->height;
 }
 
 int max(int a, int b)
@@ -98,6 +47,14 @@ int max(int a, int b)
     {
         return b;
     }
+}
+
+// Get Balance factor of node N
+int getBalance(NodeAddress N)
+{
+    if (N == NULL)
+        return 0;
+    return height(N->left) - height(N->right);
 }
 
 NodeAddress rightrotate(NodeAddress r)
@@ -136,33 +93,69 @@ NodeAddress leftrotate(NodeAddress l)
 
     return r; // Return new root
 }
-NodeAddress NodeDeletion(NodeAddress root, int val)
-{                                                     // function for node deletion
-    if (root == NULL)                                 // in case if base node (root) is null
-        return root;                                  // return root itself
-    if (val < root->val)                              // situation in which value to be deleted is lesser than the val present at root
-        root->left = NodeDeletion(root->left, val);   // traverse to the left of the root and call it recursively if condition satisfies
-    else if (val > root->val)                         // situation in which value to be deleted is greater than the val present at root
-        root->right = NodeDeletion(root->right, val); // traverse to the left of the root and call it recursively if condition satisfies
+
+NodeAddress Insertion(NodeAddress root, int val) // Function to insert a new element in a given binary search tree
+{
+    if (root == NULL)           // If no new elements present in the tree
+        return createnode(val); // calls create func to create a node with val
+
+    if (val < root->val)                         // if the val we are trying to insert is lower than the root val then insert on the left
+        root->left = Insertion(root->left, val); // insert val at the node address
+
+    else if (val > root->val)                      // if the val we are trying to insert is great than the root val then insert on the right
+        root->right = Insertion(root->right, val); // insert val at the node address
+    else
+        return root; // return the pointer address after finish
+
+    if (height(root->left) > height(root->right)) // calculating height of node is 1+ leaf node height
+    {
+        root->height = (1 + height(root->left));
+    }
     else
     {
-        if (root->left == NULL)             // if left node of root is null
-        {                                   // Parent with 1 child case left node null
-            NodeAddress temp = root->right; // take a temp pointer
-            free(root);                     // freeing memory of the root over here cause child gets deleted
-            return temp;                    // return temp pointer
-        }
-        else if (root->right == NULL)      // if right node of root is null
-        {                                  // parent with 1 child case right node null
-            NodeAddress temp = root->left; // take temp pointer assign it to the node left of root
-            free(root);                    // free the node space allocation cause it got deleted
-            return temp;
-        }
-        NodeAddress temp = FindMinElement(root->right);     // parent with two childs assign temp of the both to the min val of the right node
-        root->val = temp->val;                              // assign root val to temp val
-        root->right = NodeDeletion(root->right, temp->val); // delete the node on the right and plug the values
+        root->height = (1 + height(root->right));
     }
-    return root; // updates the treee
+
+    int balance = getBalance(root);           // For unbalanced nodes we have 4 cases
+    if (balance > 1 && val < root->left->val) // Left Left Imbalanced case
+        return rightrotate(root);
+
+    if (balance < -1 && val > root->right->val) // Right Right Imbalanced Case
+        return leftrotate(root);
+
+    if (balance > 1 && val > root->left->val) // Left Right Imbalanced Case
+    {
+        root->left = leftrotate(root->left);
+        return rightrotate(root);
+    }
+
+    if (balance < -1 && val < root->right->val) // Right Left Imbalanced Case
+    {
+        root->right = rightrotate(root->right);
+        return leftrotate(root);
+    }
+
+    return root; // return root pointer
+}
+
+NodeAddress FindMinElement(NodeAddress root)
+{                               // Function to find the min element of a node
+    NodeAddress present = root; // basically creating a pointer of the current location we are in the bst
+    while (present && present->left != NULL)
+    {                            // making sure that the pointer itself is not null and the the next element isnt null either
+        present = present->left; // present pointer is equal to the pointer of the node to the left of present
+    }
+    return present; // return the node position of present as this would be the last element of the tree
+}
+
+void preOrder(NodeAddress root)
+{
+    if (root != NULL)
+    {
+        printf("%d ", root->val);
+        preOrder(root->left);
+        preOrder(root->right);
+    }
 }
 
 int main()
@@ -180,16 +173,11 @@ int main()
     for (int i = 0; i < n; i++)
     {
         root = Insertion(root, arr[i]);
-    } // inserting elements in the array
-    printf("Traversal of given tree is \n");
-    inorder(root);
-    int del; // prints out the values in order of the binary search tree
-    printf("enter element you wanna delete: \n");
-    scanf("%d", &del);
-    printf(" Delete number del %d \n", del);
-    root = NodeDeletion(root, del);
-    printf("modified inorder traversal of list is : \n");
-    inorder(root);
+    }
+
+    printf("Preorder traversal of the constructed AVL"
+           " tree is \n");
+    preOrder(root);
 
     return 0;
 }
