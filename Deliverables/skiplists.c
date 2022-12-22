@@ -118,23 +118,29 @@ void insert(skip_list *sl, int value)
 
 node *search(skip_list *skiplist, int value)
 {
-    // Pointer to the current node as we go through the skip list
+    // Set the current node to the head node
 
     node *temp = skiplist->head;
     // run a for loop through the skip list from the top level to the bottom level
 
     for (int i = skiplist->level; i >= 0; i--)
     {
+        // While the current node's forward pointer at the current level is not null and the value of the node
+        // it points to is less than the value to be searched for, move to the next node at the current level
+
         while (temp->arrayofpointers[i] != NULL && temp->arrayofpointers[i]->value < value)
         {
             temp = temp->arrayofpointers[i];
         }
     }
+    // Set the current node to the node at the lowest level (level 0)
     temp = temp->arrayofpointers[0];
+    // If the current node is not null and its value is equal to the value to be searched for, return the current node
     if (temp != NULL && temp->value == value)
     {
         return temp;
     }
+    // otherwise return NULL
     else
     {
         return NULL;
@@ -143,7 +149,9 @@ node *search(skip_list *skiplist, int value)
 
 void delete (skip_list *sl, int value)
 {
+    // Create an update array to store the nodes that need to be updated when a node is deleted
     node *update[MAXIMUM_LEVEL + 1];
+    // Set the current node to the head node
     node *temp = sl->head;
     // Check if the value is present in the skip list
     node *node = search(sl, value);
@@ -155,13 +163,22 @@ void delete (skip_list *sl, int value)
 
     for (int i = sl->level; i >= 0; i--)
     {
+        // While the current node's forward pointer at the current level is not null and the value of the node it points to
+        // is less than the value to be deleted, move to the next node at the current level
+
         while (temp->arrayofpointers[i] != NULL && temp->arrayofpointers[i]->value < value)
         {
             temp = temp->arrayofpointers[i];
         }
+        // Add the current node to the update array at the current level
+
         update[i] = temp;
     }
+    // Set the current node to the node at the lowest level (level 0)
+
     temp = temp->arrayofpointers[0];
+    // If the current node is not null and its value is equal to the value to be deleted, proceed with the deletion
+
     if (temp != NULL && temp->value == value)
     {
         // Check if the current head node is being deleted
@@ -184,12 +201,17 @@ void delete (skip_list *sl, int value)
                 update[i]->arrayofpointers[i] = temp->arrayofpointers[i];
             }
         }
+        // Free the memory allocated for the node to be deleted
+
         free(temp->arrayofpointers);
         free(temp);
+        // Decrement the level of the skip list if the head node has a forward pointer at the current level that is null
         while (sl->level > 0 && sl->head->arrayofpointers[sl->level] == sl->head)
         {
             sl->level--;
         }
+        // Decrement the size of the skip list
+
         sl->size--;
     }
 }
@@ -208,7 +230,7 @@ void print_skip_list(skip_list *skiplist)
         printf("\n");
     }
 }
-// driver function code is self explanatory
+// driver function code is self explanatory with the test cases
 int main()
 {
     srand((unsigned int)time(NULL));
